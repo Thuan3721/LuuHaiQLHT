@@ -13,9 +13,17 @@ namespace WinFormsApp2
 {
     public partial class FormLoaiThuoc : Form
     {
+        private object row;
+
         public FormLoaiThuoc()
         {
             InitializeComponent();
+            this.Load += FormLoaiThuoc_Load; // gọi hàm khi form load
+        }
+
+        private void FormLoaiThuoc_Load(object? sender, EventArgs e)
+        {
+
         }
 
         private void btnThem_Click(object sender, EventArgs e)
@@ -25,11 +33,10 @@ namespace WinFormsApp2
                 using (SqlConnection connection = new SqlConnection("Data Source=.;Initial Catalog=QuanLyHT;Integrated Security=True;TrustServerCertificate=True"))
                 {
                     connection.Open();
-                    string query = "INSERT INTO LoaiThuoc (IDLoaiThuoc, MaLoaiThuoc, TenLoaiThuoc, GhiChu) " +
-                                   "VALUES (@IDLoaiThuoc, @MaLoaiThuoc, @TenLoaiThuoc, @GhiChu)";
+                    string query = "INSERT INTO LoaiThuoc (MaLoaiThuoc, TenLoaiThuoc, GhiChu) " +
+               "VALUES (@MaLoaiThuoc, @TenLoaiThuoc, @GhiChu)";
                     SqlCommand command = new SqlCommand(query, connection);
 
-                    command.Parameters.AddWithValue("@IDLoaiThuoc", txtIDLoaiThuoc.Text);
                     command.Parameters.AddWithValue("@MaLoaiThuoc", txtMaLoaiThuoc.Text);
                     command.Parameters.AddWithValue("@TenLoaiThuoc", txtTenLoaiThuoc.Text);
                     command.Parameters.AddWithValue("@GhiChu", txtGhiChu.Text);
@@ -52,6 +59,7 @@ namespace WinFormsApp2
             }
         }
 
+
         private void clearform()
         {
             txtIDLoaiThuoc.Clear();
@@ -72,7 +80,7 @@ namespace WinFormsApp2
                                    "WHERE IDLoaiThuoc = @IDLoaiThuoc";
 
                     SqlCommand command = new SqlCommand(query, connection);
-                    command.Parameters.AddWithValue("@IDLoaiThuoc", txtIDLoaiThuoc.Text);
+
                     command.Parameters.AddWithValue("@MaLoaiThuoc", txtMaLoaiThuoc.Text);
                     command.Parameters.AddWithValue("@TenLoaiThuoc", txtTenLoaiThuoc.Text);
                     command.Parameters.AddWithValue("@GhiChu", txtGhiChu.Text);
@@ -125,5 +133,39 @@ namespace WinFormsApp2
             }
 
         }
+
+        private void DataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+            {
+                if (e.RowIndex >= 0)
+                {
+                    DataGridViewRow row = dataGridView1.Rows[e.RowIndex];
+                    txtIDLoaiThuoc.Text = row.Cells["IDLoaiThuoc"].Value?.ToString() ?? "";
+                    txtMaLoaiThuoc.Text = row.Cells["MaLoaiThuoc"].Value?.ToString() ?? "";
+                    txtTenLoaiThuoc.Text = row.Cells["TenLoaiThuoc"].Value?.ToString() ?? "";
+                    txtGhiChu.Text = row.Cells["GhiChu"].Value?.ToString() ?? "";
+                }
+            }
+        }
+
+
+        private void LoadData()
+        {
+            using (SqlConnection connection = new SqlConnection("Data Source=.;Initial Catalog=QuanLyHT;Integrated Security=True;TrustServerCertificate=True"))
+            {
+                connection.Open();
+                SqlDataAdapter adapter = new SqlDataAdapter("SELECT * FROM LoaiThuoc", connection);
+                DataTable dt = new DataTable();
+                adapter.Fill(dt);
+                dataGridView1.DataSource = dt;
+            }
+        }
+
+        private void btnload_Click(object sender, EventArgs e)
+        {
+            LoadData();
+        }
     }
 }
+

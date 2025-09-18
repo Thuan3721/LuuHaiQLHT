@@ -41,6 +41,7 @@
             btnThem = new Button();
             btnSua = new Button();
             btnXoa = new Button();
+            btnload = new Button();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
             // 
@@ -126,6 +127,7 @@
             dataGridView1.RowHeadersWidth = 51;
             dataGridView1.Size = new Size(916, 124);
             dataGridView1.TabIndex = 9;
+            dataGridView1.CellContentClick += DataGridView1_CellContentClick;
             // 
             // btnThem
             // 
@@ -139,7 +141,7 @@
             // 
             // btnSua
             // 
-            btnSua.Location = new Point(531, 495);
+            btnSua.Location = new Point(431, 495);
             btnSua.Name = "btnSua";
             btnSua.Size = new Size(94, 29);
             btnSua.TabIndex = 11;
@@ -149,7 +151,7 @@
             // 
             // btnXoa
             // 
-            btnXoa.Location = new Point(954, 495);
+            btnXoa.Location = new Point(706, 495);
             btnXoa.Name = "btnXoa";
             btnXoa.Size = new Size(94, 29);
             btnXoa.TabIndex = 12;
@@ -157,11 +159,22 @@
             btnXoa.UseVisualStyleBackColor = true;
             btnXoa.Click += btnXoa_Click;
             // 
+            // btnload
+            // 
+            btnload.Location = new Point(932, 495);
+            btnload.Name = "btnload";
+            btnload.Size = new Size(94, 29);
+            btnload.TabIndex = 13;
+            btnload.Text = "load";
+            btnload.UseVisualStyleBackColor = true;
+            btnload.Click += btnload_Click;
+            // 
             // FormLoaiThuoc
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1110, 536);
+            Controls.Add(btnload);
             Controls.Add(btnXoa);
             Controls.Add(btnSua);
             Controls.Add(btnThem);
@@ -197,5 +210,6 @@
         private Button btnThem;
         private Button btnSua;
         private Button btnXoa;
+        private Button btnload;
     }
 }
